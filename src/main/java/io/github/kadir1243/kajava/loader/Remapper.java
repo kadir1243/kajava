@@ -15,9 +15,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 
-public class Remapper {
+/*public class Remapper {
     public static final Logger LOGGER = LogManager.getLogger(Init.MODID + " Remapper System");
-/*
+
     public static void run(File[] files,File mapping) {
         for (File file : files) {
             try {
@@ -48,7 +48,7 @@ public class Remapper {
         // TODO: Add Support for remapping class imports and class names
     }
     // TODO: Add Other Programming Languages to remap
-*/
+
     public static class YarnMappings {
         public static void download(String groupId,String artifactId,String version,File downloadedFile) {
             String url = gradle2Url(groupId,artifactId,version,Init.getConfig().mavenLink);
@@ -74,4 +74,4 @@ public class Remapper {
             return builder.toString();
         }
     }
-}
+}*/

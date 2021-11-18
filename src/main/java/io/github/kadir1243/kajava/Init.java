@@ -1,7 +1,7 @@
 package io.github.kadir1243.kajava;
 
 import io.github.kadir1243.kajava.loader.ClassLoadRuntime;
-import io.github.kadir1243.kajava.loader.Remapper;
+//import io.github.kadir1243.kajava.loader.Remapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -28,12 +28,12 @@ public class Init {
         File mappingFile = new File(mappingFileString);
         File resourcesFile = new File(resourceDirString);
         if (javaFile.mkdirs() || resourcesFile.mkdirs()) LOGGER.info("Creating Config");
-        if (!mappingFile.exists() || getConfig().yarnRedownload) {
+        /*if (!mappingFile.exists() || getConfig().yarnRedownload) {
             if (getConfig().yarnRedownload) getConfig().yarnRedownload = false;
             else LOGGER.warn("Can't found mappings");
             LOGGER.warn("Mappings ReDownloading");
-            //Remapper.YarnMappings.download(getConfig().yarnGroupId, getConfig().yarnArtifactId,getConfig().yarnVersion,mappingFile); // TODO : Remapping
-        }
+            // Remapper.YarnMappings.download(getConfig().yarnGroupId, getConfig().yarnArtifactId,getConfig().yarnVersion,mappingFile); // TODO : Remapping
+        }*/
         if (javaFile.listFiles() != null) ClassLoadRuntime.run(javaDirString);
     }
 
