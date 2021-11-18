@@ -54,7 +54,7 @@ curseforge {
 	project {
 		id = '548112'
 		changelogType = 'markdown'
-		changelog = file('changelog.txt')
+		changelog = file('changelog.md')
 		releaseType = 'alpha'
 		addGameVersion project.minecraft_version
 		addGameVersion "Fabric"
