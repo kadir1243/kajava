@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
+	id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
@@ -46,6 +47,31 @@ tasks.withType(JavaCompile).configureEach {
 
 	// Minecraft 1.17 (21w19a) upwards uses Java 16.
 	it.options.release = 16
+}
+
+curseforge {
+	apiKey = curseForgeApiKeyKajava
+	project {
+		id = '548112'
+		changelogType = 'markdown'
+		changelog = file('changelog.txt')
+		releaseType = 'alpha'
+		addGameVersion project.minecraft_version
+		addGameVersion "Fabric"
+
+		mainArtifact(jar) {
+			displayName =  "${project.archives_base_name}-${project.version}"
+		}
+		addArtifact remapSourcesJar
+
+		relations {
+			embeddedLibrary 'fabric-api'
+			embeddedLibrary 'cloth-config'
+		}
+		options {
+			forgeGradleIntegration = false
+		}
+	}
 }
 
 java {
