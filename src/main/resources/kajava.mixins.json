@@ -1,12 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "org",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "spongepowered.asm.mixin.transformer.CustomMixinClassAdding"
   ],
   "client": [
-    "ExampleMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1
