@@ -32,7 +32,7 @@ public class Init {
             if (getConfig().yarnRedownload) getConfig().yarnRedownload = false;
             else LOGGER.warn("Can't found mappings");
             LOGGER.warn("Mappings ReDownloading");
-            Remapper.YarnMappings.download(getConfig().yarnGroupId, getConfig().yarnArtifactId,getConfig().yarnVersion,mappingFile);
+            //Remapper.YarnMappings.download(getConfig().yarnGroupId, getConfig().yarnArtifactId,getConfig().yarnVersion,mappingFile); // TODO : Remapping
         }
         if (javaFile.listFiles() != null) ClassLoadRuntime.run(javaDirString);
     }
