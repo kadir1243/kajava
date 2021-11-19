@@ -18,7 +18,7 @@ public interface KajavaPlugin {
     /**
      * {@link #run() runs} common code if true
      */
-    default boolean execute() {
+    default boolean condition() {
         return true;
     }
 
@@ -31,7 +31,7 @@ public interface KajavaPlugin {
     /**
      * {@link #runClient() runs} client code if true
      */
-    default boolean executeClient() {
+    default boolean clientCondition() {
         return true;
     }
 
@@ -44,7 +44,7 @@ public interface KajavaPlugin {
     /**
      * {@link #runServer() runs} server code if true
      */
-    default boolean executeServer() {
+    default boolean serverCondition() {
         return true;
     }
 }

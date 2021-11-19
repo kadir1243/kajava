@@ -52,6 +52,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 16
 }
 
+// https://www.curseforge.com/minecraft/mc-mods/kajava (not accepted yet)
 curseforge {
 	if (curseForgeApiKeyKajava != null) apiKey = curseForgeApiKeyKajava
 	else apiKey = "DUMMY"
@@ -77,6 +78,7 @@ curseforge {
 	}
 }
 
+// https://modrinth.com/mod/kajava
 task publishModrinth (type: TaskModrinthUpload) {
 	if (modrinthTokenKajava != null) token = modrinthTokenKajava
 	else token = "DUMMY"
@@ -114,7 +116,7 @@ publishing {
 		}
 	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	// maven published at : https://mymavenrepo.com/repo/y9bmQiqluv2BrIIsqiol/
 	repositories {
 		mavenLocal()
 		maven {

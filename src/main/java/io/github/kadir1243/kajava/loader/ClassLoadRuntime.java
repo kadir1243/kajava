@@ -27,13 +27,13 @@ public class ClassLoadRuntime {
                             Method run = loadedClass.getMethod("run");
                             Method runClient = loadedClass.getMethod("runClient");
                             Method runServer = loadedClass.getMethod("runServer");
-                            Method execute = loadedClass.getMethod("execute");
-                            Method executeServer = loadedClass.getMethod("executeServer");
-                            Method executeClient = loadedClass.getMethod("executeClient");
+                            Method condition = loadedClass.getMethod("condition");
+                            Method serverCondition = loadedClass.getMethod("serverCondition");
+                            Method clientCondition = loadedClass.getMethod("clientCondition");
                             Object newSystem = loadedClass.newInstance();
-                            if ((boolean)execute.invoke(newSystem)) run.invoke(newSystem);
-                            if ((boolean)executeClient.invoke(newSystem) && (Init.isClient != null && Init.isClient)) runClient.invoke(newSystem);
-                            if ((boolean)executeServer.invoke(newSystem) && (Init.isClient == null || !Init.isClient)) runServer.invoke(newSystem);
+                            if ((boolean)condition.invoke(newSystem)) run.invoke(newSystem);
+                            if ((boolean)clientCondition.invoke(newSystem) && (Init.isClient)) runClient.invoke(newSystem);
+                            if ((boolean)serverCondition.invoke(newSystem) && (!Init.isClient)) runServer.invoke(newSystem);
                         }
                     }
                 }
