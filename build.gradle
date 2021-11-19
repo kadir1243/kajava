@@ -59,10 +59,9 @@ curseforge {
 		addGameVersion project.minecraft_version
 		addGameVersion "Fabric"
 
-		mainArtifact(jar) {
-			displayName =  "${project.archives_base_name}-${project.version}"
+		mainArtifact(remapJar) {
+			displayName =  "${project.archives_base_name} ${project.version}-${project.minecraft_version}"
 		}
-		addArtifact remapSourcesJar
 
 		relations {
 			embeddedLibrary 'fabric-api'
