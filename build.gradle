@@ -2,7 +2,10 @@ plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
+	id "com.modrinth.minotaur" version "1.2.1"
 }
+
+import com.modrinth.minotaur.TaskModrinthUpload
 
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
@@ -74,6 +77,16 @@ curseforge {
 	}
 }
 
+task publishModrinth (type: TaskModrinthUpload) {
+	if (modrinthTokenKajava != null) token = modrinthTokenKajava
+	else token = "DUMMY"
+	projectId = '3frGeH2B'
+	versionNumber = project.version
+	uploadFile = remapJar
+	addGameVersion(project.minecraft_version)
+	addLoader('fabric')
+}
+
 java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
@@ -103,9 +116,13 @@ publishing {
 
 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+		mavenLocal()
+		maven {
+			if (myMavenRepoWriteUrl != null) url = myMavenRepoWriteUrl
+			credentials {
+				username 'myMavenRepo'
+				if (myMavenRepoWritePassword != null) password myMavenRepoWritePassword
+			}
+		}
 	}
 }
