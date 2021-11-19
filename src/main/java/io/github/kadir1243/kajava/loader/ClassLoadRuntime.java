@@ -19,6 +19,7 @@ public class ClassLoadRuntime {
                 URL[] urls = new URL[]{url};
                 ClassLoader classLoader = new URLClassLoader(urls);
                 if (file.getName().endsWith(".class")) {
+                    if (!Init.getConfig().javaRuns) return;
                     Class<?> cls = classLoader.loadClass(file.getName().replaceAll(".class",""));
                     for (String s : Init.getConfig().runnableClasses) {
                         if ((cls.getPackageName() + (cls.getPackageName().equals("") ? "" : ".") + cls.getName()).equals(s)) {

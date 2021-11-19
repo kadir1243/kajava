@@ -22,7 +22,7 @@ public class Compile {
     }
 
     public static void compileJava(File file) {
-        if (!file.getName().endsWith(".java")) return;
+        if (!Init.getConfig().javaCompile || !file.getName().endsWith(".java")) return;
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);

@@ -9,6 +9,8 @@ public class ConfigJava implements ConfigData {
     public String[] runnableClasses = new String[]{};
     @Comment("Compiles All Java Files")
     public boolean javaCompile = true;
+    @Comment("Runs All Java Files")
+    public boolean javaRuns = true;
     public String[] mixinClasses = new String[]{};
     // public boolean remapJava = false; // TODO: Remapping
     //public String mavenLink = "https://maven.fabricmc.net/";
