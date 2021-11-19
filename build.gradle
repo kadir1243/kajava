@@ -50,7 +50,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 curseforge {
-	if (System.getenv('curseForgeApiKeyKajava') != null) 	apiKey = curseForgeApiKeyKajava
+	if (curseForgeApiKeyKajava != null) apiKey = curseForgeApiKeyKajava
 	else apiKey = "DUMMY"
 	project {
 		id = '548112'
