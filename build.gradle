@@ -54,7 +54,7 @@ tasks.withType(JavaCompile).configureEach {
 
 // https://www.curseforge.com/minecraft/mc-mods/kajava (not accepted yet)
 curseforge {
-	if (curseForgeApiKeyKajava != null) apiKey = curseForgeApiKeyKajava
+	if (project.hasProperty('curseForgeApiKeyKajava')) apiKey = project.findProperty("curseForgeApiKeyKajava")
 	else apiKey = "DUMMY"
 	project {
 		id = '548112'
@@ -106,13 +106,7 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
+			from components.java
 		}
 	}
 
