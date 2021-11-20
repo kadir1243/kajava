@@ -114,10 +114,10 @@ publishing {
 	repositories {
 		mavenLocal()
 		maven {
-			if (myMavenRepoWriteUrl != null) url = myMavenRepoWriteUrl
+			if (project.hasProperty("myMavenRepoWriteUrl")) url = project.findProperty("myMavenRepoWriteUrl")
 			credentials {
 				username 'myMavenRepo'
-				if (myMavenRepoWritePassword != null) password myMavenRepoWritePassword
+				if (project.hasProperty("myMavenRepoWritePassword")) password project.findProperty("myMavenRepoWritePassword")
 			}
 		}
 	}
