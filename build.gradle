@@ -80,7 +80,7 @@ curseforge {
 
 // https://modrinth.com/mod/kajava
 task publishModrinth (type: TaskModrinthUpload) {
-	if (modrinthTokenKajava != null) token = modrinthTokenKajava
+	if (project.hasProperty('modrinthTokenKajava')) token = project.findProperty("modrinthTokenKajava")
 	else token = "DUMMY"
 	projectId = '3frGeH2B'
 	versionNumber = project.version
