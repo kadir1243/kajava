@@ -52,7 +52,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 16
 }
 
-// https://www.curseforge.com/minecraft/mc-mods/kajava (not accepted yet)
+// https://www.curseforge.com/minecraft/mc-mods/kajava
 curseforge {
 	if (project.hasProperty('curseForgeApiKeyKajava')) apiKey = project.findProperty("curseForgeApiKeyKajava")
 	else apiKey = "DUMMY"
