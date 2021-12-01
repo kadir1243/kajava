@@ -1,6 +1,6 @@
 package io.github.kadir1243.kajava;
 
-import io.github.kadir1243.kajava.loader.ClassLoadRuntime;
+import io.github.kadir1243.kajava.loader.RuntimeClassLoader;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.EnvType;
@@ -23,13 +23,16 @@ public class Init {
         Path normalConfigDirPath = FabricLoader.getInstance().getConfigDir();
         String normalConfigDirString = normalConfigDirPath.toString();
         String modConfigDir = normalConfigDirString + "\\" + MODID;
-        String javaDirString =  modConfigDir + "\\source\\java";
+        String sourcesDirString = modConfigDir + "\\source\\";
+        String javaDirString =  sourcesDirString + "java";
         String resourceDirString = modConfigDir + "\\resouces";
-        String mappingFileString = modConfigDir + "\\yarn.jar";
+        // String mappingFileString = modConfigDir + "\\yarn.jar"; // TODO: Remapping
+        String groovyDirString = sourcesDirString + "groovy";
         File javaFile = new File(javaDirString);
-        File mappingFile = new File(mappingFileString);
+        File groovyFile = new File(groovyDirString);
+        // File mappingFile = new File(mappingFileString);
         File resourcesFile = new File(resourceDirString);
-        if (javaFile.mkdirs() || resourcesFile.mkdirs()) LOGGER.info("Creating Config");
+        if (javaFile.mkdirs() || resourcesFile.mkdirs() || groovyFile.mkdirs()) LOGGER.info("Creating Config");
         try {
             File exampleFile = new File(javaDirString + "\\Example.java");
             if (exampleFile.createNewFile() && getConfig().createExample) {
@@ -61,7 +64,7 @@ public class Init {
                     // Remapper.YarnMappings.download(getConfig().yarnGroupId, getConfig().yarnArtifactId,getConfig().yarnVersion,mappingFile); // TODO : Remapping
                 }*/
         } catch (IOException e) {e.printStackTrace();}
-        if (javaFile.listFiles() != null) ClassLoadRuntime.run(javaDirString);
+        RuntimeClassLoader.run(javaDirString,groovyDirString);
     }
 
     public static void clientInit() {

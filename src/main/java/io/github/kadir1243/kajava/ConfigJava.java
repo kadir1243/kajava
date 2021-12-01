@@ -12,7 +12,9 @@ public class ConfigJava implements ConfigData {
     @Comment("Runs All Java Files")
     public boolean javaRuns = true;
     public boolean createExample = true;
-    /*public boolean remapJava = false; // TODO: Remapping
+    @Comment("Runs All Groovy Files")
+    public boolean groovyRuns = true;
+/*public boolean remapJava = false; // TODO: Remapping
     public String mavenLink = "https://maven.fabricmc.net/";
     public String yarnGroupId = "net.fabricmc";
     public String yarnArtifactId = "yarn";

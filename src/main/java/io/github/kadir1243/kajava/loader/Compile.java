@@ -13,12 +13,8 @@ import java.io.File;
 public class Compile {
     public static final Logger LOGGER = LogManager.getLogger(Init.MODID + " Compiler System");
 
-    public static void run(String javaDirString) {
-        File[] files = new File(javaDirString).listFiles();
-        if (files == null) return;
-        for (File file : files) {
-            Compile.compileJava(file);
-        }
+    public static void run(String javaDirString,String groovyDirString) {
+        compileJavaFiles(javaDirString);
     }
 
     public static void compileJava(File file) {
@@ -31,6 +27,14 @@ public class Compile {
             fileManager.close();
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void compileJavaFiles(String javaDirString) {
+        File[] javaFiles = new File(javaDirString).listFiles();
+        if (javaFiles == null) return;
+        for (File file : javaFiles) {
+            compileJava(file);
         }
     }
     // TODO: Add Other Programming Languages to compile
