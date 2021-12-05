@@ -4,13 +4,16 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
+import java.util.List;
+
 @Config(name = Init.MODID)
 public class ConfigJava implements ConfigData {
-    public String[] runnableClasses = new String[]{"Example"};
+    public List<String> runnableClasses = List.of("Example");
     @Comment("Compiles All Java Files")
     public boolean javaCompile = true;
     @Comment("Runs All Java Files")
     public boolean javaRuns = true;
+    @Comment("Create's Example Classes")
     public boolean createExample = true;
     @Comment("Runs All Groovy Files")
     public boolean groovyRuns = true;

@@ -1,0 +1,7 @@
+{
+  "text.autoconfig.kajava.option.javaCompile": "Java Derleme",
+  "text.autoconfig.kajava.option.javaRuns": "Java Çalıştırma",
+  "text.autoconfig.kajava.option.createExample": "Örneği Oluştur",
+  "text.autoconfig.kajava.option.groovyRuns": "Groovy Çalıştırma",
+  "text.autoconfig.kajava.option.runnableClasses": "Çalıştırılabilir Sınıflar"
+}
