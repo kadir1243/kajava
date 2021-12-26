@@ -17,7 +17,7 @@ public class RuntimeClassLoader {
         try {
             File javaFile = new File(javaDirString);
             File groovyFile = new File(groovyDirString);
-            Compile.run(javaDirString,groovyDirString);
+            Compile.run(javaDirString);
             if (javaFile.listFiles() != null) {
                 for (File file : Objects.requireNonNull(javaFile.listFiles())) {
                     URL url = javaFile.toURI().toURL();

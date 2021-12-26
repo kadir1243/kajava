@@ -89,6 +89,7 @@ task publishModrinth (type: TaskModrinthUpload) {
 	projectId = '3frGeH2B'
 	versionNumber = project.version
 	uploadFile = remapJar
+	changelog = "Changelog can be founded at [Commits](https://github.com/kadir1243/kajava/commits/1.17)"
 	addGameVersion(project.minecraft_version)
 	addLoader('fabric')
 }
@@ -127,14 +128,14 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-
+		}
+		mavenJar(MavenPublication) {
 			artifact javadocJar
 		}
 	}
 
 	// maven published at : https://mymavenrepo.com/repo/y9bmQiqluv2BrIIsqiol/
 	repositories {
-		mavenLocal()
 		maven {
 			if (project.hasProperty("myMavenRepoWriteUrl")) url = project.findProperty("myMavenRepoWriteUrl")
 			credentials {

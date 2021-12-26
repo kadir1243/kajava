@@ -3,5 +3,6 @@
   "text.autoconfig.kajava.option.javaRuns": "Java Runs",
   "text.autoconfig.kajava.option.createExample": "Create Example",
   "text.autoconfig.kajava.option.groovyRuns": "Groovy Runs",
-  "text.autoconfig.kajava.option.runnableClasses": "Runnable Classes"
+  "text.autoconfig.kajava.option.runnableClasses": "Runnable Classes",
+  "text.autoconfig.kajava.option.extraPackages": "Extra Packages To Compile"
 }

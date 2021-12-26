@@ -1,5 +1,6 @@
 package io.github.kadir1243.kajava;
 
+import com.google.common.collect.Lists;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
@@ -17,6 +18,8 @@ public class ConfigJava implements ConfigData {
     public boolean createExample = true;
     @Comment("Runs All Groovy Files")
     public boolean groovyRuns = true;
+
+    public List<String> extraPackages = Lists.newArrayList();
 /*public boolean remapJava = false; // TODO: Remapping
     public String mavenLink = "https://maven.fabricmc.net/";
     public String yarnGroupId = "net.fabricmc";
