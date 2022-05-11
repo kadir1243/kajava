@@ -85,7 +85,8 @@ modrinth {
 	if (project.hasProperty('modrinthTokenKajava')) token = project.findProperty("modrinthTokenKajava")
 	else token = "DUMMY"
 	projectId = '3frGeH2B'
-	versionType = project.version
+	versionNumber = project.version
+	versionType = "alpha"
 	uploadFile = remapJar
 	changelog = "Changelog can be founded at [Commits](https://github.com/kadir1243/kajava/commits)"
 	gameVersions = [project.minecraft_version] // An array of game versions the version supports
@@ -115,7 +116,7 @@ java {
 }
 
 task publishToPlatforms {
-	dependsOn(publish,modrinth,curseforge)
+	dependsOn(publish,tasks.getByName('modrinth'),tasks.getByName('curseforge'))
 }
 
 jar {
