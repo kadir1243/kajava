@@ -7,16 +7,17 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class Init {
     public static final String MODID = "kajava";
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
     public static boolean isClient = FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT);
 
+    @SuppressWarnings("CommentedOutCode")
     public static void commonInit() {
         AutoConfig.register(ConfigJava.class, GsonConfigSerializer::new);
         String normalConfigDirString = FabricLoader.getInstance().getConfigDir().toString();
@@ -43,12 +44,10 @@ public class Init {
 
     @Environment(EnvType.CLIENT)
     public static void clientInit() {
-
     }
 
     @Environment(EnvType.SERVER)
     public static void serverInit() {
-
     }
 
     public static ConfigJava getConfig() {

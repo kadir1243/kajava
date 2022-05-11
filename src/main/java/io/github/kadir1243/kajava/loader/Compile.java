@@ -1,9 +1,9 @@
 package io.github.kadir1243.kajava.loader;
 
 import io.github.kadir1243.kajava.Init;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -12,10 +12,10 @@ import javax.tools.ToolProvider;
 import java.io.File;
 
 public class Compile {
-    public static final Logger LOGGER = LogManager.getLogger(Init.MODID + " Compiler System");
+    public static final Logger LOGGER = LoggerFactory.getLogger(Init.MODID + " Compiler System");
 
     public static void run(String javaDirString) {
-        compileJavaFiles(javaDirString, Init.getConfig().extraPackages.toArray(new String[0]));
+        compileJavaFiles(javaDirString);
     }
 
     public static void compileJava(File file) {
@@ -32,19 +32,18 @@ public class Compile {
         }
     }
 
-    public static void compileJavaFiles(String javaDirString, @Nullable String[] extraPackageDirs) {
+    @Deprecated(forRemoval = true, since = "0.0.7")
+    public static void compileJavaFiles(String javaDirString, @SuppressWarnings("unused") @Deprecated(forRemoval = true) @Nullable String[] extraPackageDirs) {
+        compileJavaFiles(javaDirString);
+    }
+
+    public static void compileJavaFiles(String javaDirString) {
         File[] javaFiles = new File(javaDirString).listFiles();
         if (javaFiles == null) return;
         for (File file : javaFiles) {
-            compileJava(file);
-        }
-        if (extraPackageDirs != null) {
-            for (String packages : extraPackageDirs) {
-                if (packages != null) {
-                    compileJava(new File(packages));
-                }
-            }
+            if (file.isDirectory()) compileJavaFiles(javaDirString);
+            else compileJava(file);
         }
     }
-    // TODO: Add Other Programming Languages to compile
+// TODO: Add Other Programming Languages to compile
 }

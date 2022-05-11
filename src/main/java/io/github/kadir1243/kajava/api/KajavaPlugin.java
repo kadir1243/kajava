@@ -1,14 +1,15 @@
 package io.github.kadir1243.kajava.api;
 
 import io.github.kadir1243.kajava.Init;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("unused")
 public interface KajavaPlugin {
     /**
      * Default Logger
      */
-    Logger LOGGER = LogManager.getLogger(Init.MODID);
+    Logger LOGGER = LoggerFactory.getLogger(Init.MODID);
 
     /**
      * Runnable code (for client and server) if you want to add common things use this method
@@ -17,7 +18,9 @@ public interface KajavaPlugin {
 
     /**
      * {@link #run() runs} common code if true
+     * @deprecated use {@code if(statement)} in {@link #run} instead
      */
+    @Deprecated(forRemoval = true, since = "0.0.7")
     default boolean condition() {
         return true;
     }
@@ -30,7 +33,9 @@ public interface KajavaPlugin {
 
     /**
      * {@link #runClient() runs} client code if true
+     * @deprecated use {@code if(statement)} in {@link #runClient} instead
      */
+    @Deprecated(forRemoval = true, since = "0.0.7")
     default boolean clientCondition() {
         return true;
     }
@@ -43,7 +48,9 @@ public interface KajavaPlugin {
 
     /**
      * {@link #runServer() runs} server code if true
+     * @deprecated use {@code if(statement)} in {@link #runServer} instead
      */
+    @Deprecated(forRemoval = true, since = "0.0.7")
     default boolean serverCondition() {
         return true;
     }

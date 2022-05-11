@@ -1,11 +1,10 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
-	id "com.modrinth.minotaur" version "1.2.1"
+	id "com.modrinth.minotaur" version "2.+"
+	id 'io.github.juuxel.loom-quiltflower' version '1.7.2'
 }
-
-import com.modrinth.minotaur.TaskModrinthUpload
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
@@ -20,8 +19,11 @@ repositories {
 	maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
-loom {
-
+quiltflower {
+	preferences {
+		useJadVarnaming	1
+	}
+	quiltflowerVersion = '1.8.1'
 }
 
 dependencies {
@@ -46,12 +48,6 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
-	it.options.encoding = "UTF-8"
-
 	// Minecraft 1.18 upwards uses Java 17.
 	it.options.release = 17
 }
@@ -82,16 +78,20 @@ curseforge {
 	}
 }
 
+import com.modrinth.minotaur.dependencies.ModDependency
 // https://modrinth.com/mod/kajava
-task publishModrinth (type: TaskModrinthUpload) {
+modrinth {
 	if (project.hasProperty('modrinthTokenKajava')) token = project.findProperty("modrinthTokenKajava")
 	else token = "DUMMY"
 	projectId = '3frGeH2B'
-	versionNumber = project.version
+	versionType = project.version
 	uploadFile = remapJar
 	changelog = "Changelog can be founded at [Commits](https://github.com/kadir1243/kajava/commits/1.17)"
-	addGameVersion(project.minecraft_version)
-	addLoader('fabric')
+	gameVersions = [project.minecraft_version] // An array of game versions the version supports
+	loaders = ['fabric'] // Self-explanatory.
+	dependencies = [
+			new ModDependency('P7dR8mSH', 'required') // Creates a new required dependency on Fabric API
+	]
 }
 
 javadoc {
@@ -114,7 +114,7 @@ java {
 }
 
 task publishToPlatforms {
-	dependsOn(publish,publishModrinth,tasks.getByName('curseforge'))
+	dependsOn(publish,modrinth,curseforge)
 }
 
 jar {
@@ -128,9 +128,6 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-		}
-		mavenJar(MavenPublication) {
-			artifact javadocJar
 		}
 	}
 

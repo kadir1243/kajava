@@ -7,16 +7,18 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
+@SuppressWarnings({"CommentedOutCode", "unused"})
 public class Remapper {
-    public static final Logger LOGGER = LogManager.getLogger(Init.MODID + " Remapper System");
+    public static final Logger LOGGER = LoggerFactory.getLogger(Init.MODID + " Remapper System");
 
-    public static void run(File[] inputFiles,File mappingFile) {
+    // TODO
+    public static void run(File[] inputFiles, File mappingFile) {
         for (File inputFile : inputFiles) {
             try {
                 remapAllJava(inputFile,mappingFile);

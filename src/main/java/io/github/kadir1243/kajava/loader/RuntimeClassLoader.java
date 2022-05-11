@@ -2,17 +2,17 @@ package io.github.kadir1243.kajava.loader;
 
 import groovy.lang.GroovyClassLoader;
 import io.github.kadir1243.kajava.Init;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Objects;
 
-@SuppressWarnings("deprecation")
 public class RuntimeClassLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RuntimeClassLoader.class);
     public static void run(String javaDirString,String groovyDirString) {
         try {
             File javaFile = new File(javaDirString);
@@ -40,9 +40,8 @@ public class RuntimeClassLoader {
     }
 
     public static void loadGroovyFile(File file,ClassLoader classLoader) {
-        GroovyClassLoader groovyClassLoader = new GroovyClassLoader(classLoader);
         if (!file.getName().endsWith(".groovy") || !Init.getConfig().groovyRuns) return;
-        try {
+        try (GroovyClassLoader groovyClassLoader = new GroovyClassLoader(classLoader)) {
             Class<?> loadedClass = groovyClassLoader.parseClass(file);
             for (String s : Init.getConfig().runnableClasses) {
                 if ((loadedClass.getPackageName() + (loadedClass.getPackageName().equals("") ? "" : ".") + loadedClass.getName()).equals(s)) {
@@ -55,15 +54,13 @@ public class RuntimeClassLoader {
     }
 
     public static void loadJavaFile(File file,ClassLoader classLoader) {
+        if (!file.getName().endsWith(".class") || !Init.getConfig().javaRuns) return;
         try {
-            if (file.getName().endsWith(".class")) {
-                if (!Init.getConfig().javaRuns) return;
-                Class<?> loadedClass = classLoader.loadClass(file.getName().replaceAll(".class",""));
-                for (String s : Init.getConfig().runnableClasses) {
-                    if ((loadedClass.getPackageName() + (loadedClass.getPackageName().equals("") ? "" : ".") + loadedClass.getName()).equals(s)) {
-                        Class<?> runnableClass = Class.forName(loadedClass.getName(), true, classLoader);
-                        runMethods(runnableClass);
-                    }
+            Class<?> loadedClass = classLoader.loadClass(file.getName().replaceAll(".class",""));
+            for (String s : Init.getConfig().runnableClasses) {
+                if ((loadedClass.getPackageName() + (loadedClass.getPackageName().equals("") ? "" : ".") + loadedClass.getName()).equals(s)) {
+                    Class<?> runnableClass = Class.forName(loadedClass.getName(), true, classLoader);
+                    runMethods(runnableClass);
                 }
             }
         } catch (Throwable e) {
@@ -77,9 +74,19 @@ public class RuntimeClassLoader {
         Method condition = loadedClass.getMethod("condition");
         Method serverCondition = loadedClass.getMethod("serverCondition");
         Method clientCondition = loadedClass.getMethod("clientCondition");
+        @SuppressWarnings("deprecation")
         Object newSystem = loadedClass.newInstance();
-        if ((boolean) condition.invoke(newSystem)) run.invoke(newSystem);
-        if ((boolean) clientCondition.invoke(newSystem) && (Init.isClient)) runClient.invoke(newSystem);
-        if ((boolean) serverCondition.invoke(newSystem) && (!Init.isClient)) runServer.invoke(newSystem);
+        if (!condition.isDefault() || !serverCondition.isDefault() || !clientCondition.isDefault()) {
+            LOGGER.warn("Condition methods are deprecated and planned to remove");
+        }
+        if ((boolean) condition.invoke(newSystem)) {
+            run.invoke(newSystem);
+        }
+        if ((boolean) clientCondition.invoke(newSystem) && Init.isClient) {
+            runClient.invoke(newSystem);
+        }
+        if ((boolean) serverCondition.invoke(newSystem) && !Init.isClient) {
+            runServer.invoke(newSystem);
+        }
     }
 }

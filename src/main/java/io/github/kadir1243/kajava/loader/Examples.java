@@ -2,15 +2,15 @@ package io.github.kadir1243.kajava.loader;
 
 import io.github.kadir1243.kajava.Init;
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class Examples {
-    private static final Logger LOGGER = LogManager.getLogger(Init.MODID + " Example Creater");
+    private static final Logger LOGGER = LoggerFactory.getLogger(Init.MODID + " Example Creater");
     public static void init() {
         try {
             if (Init.getConfig().createExample){
